@@ -1,0 +1,276 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Sa3dOlaa</title>
+<style>
+body, html{
+  margin:0;
+  padding:0;
+  font-family:'Orbitron', sans-serif;
+  height:100%;
+  overflow:hidden;
+  background:#050505;
+  position:relative;
+}
+
+/* ===== Video Background ===== */
+.video-bg{
+  position:fixed;
+  top:0;
+  left:0;
+  width:100%;
+  height:100%;
+  z-index:0;
+  overflow:hidden;
+}
+#bgVideo{
+  width:100%;
+  height:100%;
+  object-fit:cover;
+  position:absolute;
+  top:0; left:0;
+}
+
+/* ===== Container ===== */
+.container{
+  position:relative;
+  z-index:2;
+  text-align:center;
+  padding-top:80px;
+  color:white;
+}
+
+/* صورة سعدولا */
+.profile img{
+  width:160px;
+  border-radius:50%;
+  margin-bottom:20px;
+  transition:0.3s;
+}
+
+/* الاسم Neon أسود */
+h1{
+  font-size:60px;
+  letter-spacing:5px;
+  color:#000;
+  text-shadow:
+    0 0 5px #fff,
+    0 0 10px #fff,
+    0 0 20px #000,
+    0 0 30px #000,
+    0 0 40px #000;
+  margin-bottom:10px;
+  animation: flicker 2s infinite;
+}
+@keyframes flicker{
+  0%,100%{opacity:1;}
+  50%{opacity:0.7;}
+}
+
+/* ===== وصف متحرك تحت الاسم ===== */
+.description{
+  font-size:20px;
+  color:#ffffffaa;
+  margin-bottom:30px;
+  min-height:30px;
+  font-family:'Courier New', monospace;
+}
+
+/* Laser effect تحت الاسم */
+.laser{
+  width:250px;
+  height:3px;
+  margin:0 auto 40px auto;
+  background:linear-gradient(90deg,#000,#555);
+  box-shadow:0 0 20px #000;
+  animation:laserMove 3s infinite linear;
+}
+@keyframes laserMove{
+  0%{transform:scaleX(0.5)}
+  50%{transform:scaleX(1.2)}
+  100%{transform:scaleX(0.5)}
+}
+
+/* ===== اللوجوهات مع Overlay دائري ===== */
+.links{
+  display:flex;
+  flex-wrap:wrap;
+  justify-content:center;
+  gap:25px;
+  margin-bottom:40px;
+  position:relative;
+  z-index:2;
+}
+
+.links a{
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  width:70px;
+  height:70px;
+  border-radius:50%;
+  background:rgba(0,0,0,0.3); /* Overlay دائري */
+  transition:0.3s;
+  position:relative;
+}
+.links a span.tooltip{
+  position:absolute;
+  bottom:110%;
+  left:50%;
+  transform:translateX(-50%);
+  background:#000000cc;
+  padding:6px 12px;
+  border-radius:8px;
+  font-size:14px;
+  opacity:0;
+  pointer-events:none;
+  white-space:nowrap;
+  color:#fff;
+  text-shadow:0 0 8px #fff;
+  transition:0.3s;
+}
+.links a:hover span.tooltip{
+  opacity:1;
+}
+.links img{
+  width:50px; 
+  height:50px;
+  transition:0.3s transform 0.3s, filter 0.3s, box-shadow 0.3s;
+  border-radius:50%;
+}
+
+/* Neon Hover + Scale */
+.links a:hover img.kick{ transform:scale(1.4); box-shadow:0 0 25px #00ff00; }
+.links a:hover img.whatsapp{ transform:scale(1.4); box-shadow:0 0 25px #00ff00; }
+.links a:hover img.instagram{ transform:scale(1.4); box-shadow:0 0 25px #fccc00; }
+.links img.youtube{
+  filter: drop-shadow(0 0 12px #8B0000) drop-shadow(0 0 25px #8B0000);
+}
+.links a:hover img.youtube{ transform:scale(1.4); }
+.links a:hover img.tiktok{ transform:scale(1.4); box-shadow:0 0 25px #000; }
+.links a:hover img.facebook{ transform:scale(1.4); box-shadow:0 0 25px #0000ff; }
+
+/* ===== Footer ===== */
+.footer{
+  position:absolute;
+  bottom:10px;
+  width:100%;
+  text-align:center;
+  color:#ffffffaa;
+  font-size:14px;
+  line-height:1.5;
+}
+.footer span{
+  color:#f0f0f0; /* اسم محمد حسن باللون الفاتح */
+  font-weight:bold;
+}
+
+/* زرار الصوت */
+#soundToggle{
+  position:fixed;
+  top:20px;
+  right:20px;
+  z-index:5;
+  background:#000000aa;
+  color:white;
+  border:none;
+  padding:10px 15px;
+  border-radius:8px;
+  cursor:pointer;
+  font-size:18px;
+  box-shadow:0 0 10px #00ffea;
+  transition:0.3s;
+}
+#soundToggle:hover{
+  box-shadow:0 0 20px #00ffea;
+}
+</style>
+</head>
+<body>
+
+<!-- ===== Video Background ===== -->
+<div class="video-bg">
+  <video id="bgVideo" autoplay muted playsinline></video>
+</div>
+
+<!-- ===== Mute / Sound Button ===== -->
+<button id="soundToggle">🔇</button>
+
+<div class="container">
+  <div class="profile">
+    <img src="saadola.jpg" alt="Sa3dOlaa">
+    <h1>Sa3dOlaa</h1>
+    <div class="laser"></div>
+    <div class="description" id="typingText"></div>
+  </div>
+
+  <div class="links">
+    <a href="https://kick.com/sa3dola" target="_blank"><img src="kick.png" alt="Kick" class="kick"><span class="tooltip">Watch My Kick</span></a>
+    <a href="https://www.whatsapp.com/channel/0029Vabs0vI4IBhL0ZMqwT07" target="_blank"><img src="whatsapp.png" alt="WhatsApp" class="whatsapp"><span class="tooltip">Follow My WhatsApp</span></a>
+    <a href="https://www.youtube.com/@Sa3dola" target="_blank"><img src="youtube.png" alt="YouTube" class="youtube"><span class="tooltip">View My YouTube Channel</span></a>
+    <a href="https://www.instagram.com/sa3dolaa" target="_blank"><img src="instagram.png" alt="Instagram" class="instagram"><span class="tooltip">Follow My Instagram</span></a>
+    <a href="https://www.tiktok.com/@sa3dollaa" target="_blank"><img src="tiktok.png" alt="TikTok" class="tiktok"><span class="tooltip">Watch My TikTok</span></a>
+    <a href="https://www.facebook.com/Sa3dolaa" target="_blank"><img src="facebook.png" alt="Facebook" class="facebook"><span class="tooltip">Follow My Facebook</span></a>
+  </div>
+</div>
+
+<div class="footer">
+  © Sa3dOlaa - All Rights Reserved<br>
+  Developed by <span>Mohamed Hassan</span>
+</div>
+
+<script>
+// ===== Typing Effect =====
+const messages = ["Content Creator • Streamer", "Gamer • Entertainer", "Follow My Streams"];
+let currentMessage = 0;
+let currentChar = 0;
+const typingElement = document.getElementById('typingText');
+
+function type(){
+  if(currentChar < messages[currentMessage].length){
+    typingElement.textContent += messages[currentMessage][currentChar];
+    currentChar++;
+    setTimeout(type,100);
+  }else{
+    setTimeout(erase,1500);
+  }
+}
+function erase(){
+  if(currentChar > 0){
+    typingElement.textContent = typingElement.textContent.slice(0,-1);
+    currentChar--;
+    setTimeout(erase,50);
+  }else{
+    currentMessage = (currentMessage+1) % messages.length;
+    setTimeout(type,500);
+  }
+}
+type();
+
+// ===== Playlist Video Background =====
+const videos = ["video1.mp4","video2.mp4","video3.mp4"];
+let currentIndex = 0;
+const videoEl = document.getElementById('bgVideo');
+const soundBtn = document.getElementById('soundToggle');
+
+function playNextVideo() {
+  videoEl.src = videos[currentIndex];
+  videoEl.play().catch(()=>{}); // autoplay muted
+}
+
+playNextVideo();
+
+videoEl.addEventListener('ended', ()=>{
+  currentIndex = (currentIndex + 1) % videos.length;
+  playNextVideo();
+});
+
+soundBtn.addEventListener('click', ()=>{
+  videoEl.muted = !videoEl.muted;
+  soundBtn.textContent = videoEl.muted ? '🔇' : '🔊';
+});
+</script>
+</body>
+</html>
